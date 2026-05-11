@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h1 class="glec-header">Assignment History</h1>
+
+<form method="get" class="mb-4">
+    <label for="date" class="form-label fw-bold">Select Date:</label>
+    <input type="date" name="date" id="date" class="form-control d-inline-block w-auto"
+           value="{{ selected_date|date:'Y-m-d' }}">
+    <button type="submit" class="btn btn-primary ms-2">Show Assignments</button>
+</form>
+
+{% if selected_date %}
+    <h5>Showing assignments for: <strong>{{ selected_date }}</strong></h5>
+    {% if grouped_assignments %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Room</th>
+                        <th>Invigilator(s)</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room, assignment_list in grouped_assignments.items %}
+                        {% for a in assignment_list %}
+                        <tr>
+                            {% if forloop.first %}
+                                <td rowspan="{{ assignment_list|length }}">{{ room }}</td>
+                            {% endif %}
+                            <td>{{ a.invigilator.name }}</td>
+                            <td>{{ a.invigilator.department }}</td>
+                            <td>{{ a.get_role_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">No assignments found for the selected date.</p>
+    {% endif %}
+{% else %}
+    <p class="text-muted">Please select a date to view assignments.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1 class="glec-header">Upload Faculty & Room Data</h1>
+
+<form method="post" enctype="multipart/form-data" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="faculty_file" class="form-label">Faculty Excel File</label>
+        <input type="file" class="form-control" id="faculty_file" name="faculty_file" accept=".xlsx" required>
+    </div>
+    <div class="mb-3">
+        <label for="room_file" class="form-label">Room Excel File</label>
+        <input type="file" class="form-control" id="room_file" name="room_file" accept=".xlsx" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+{% endblock %}

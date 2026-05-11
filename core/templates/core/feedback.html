@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="feedback-container" style="max-width: 400px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 2px 16px #e0e0e0; padding: 2.5rem 2rem; text-align: center;">
+    <h2 style="color: #a01a2f; margin-bottom: 1.5rem;">Feedback</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 1.5rem;">
+            <label style="font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; display: block;">How do you feel about the support you received?</label>
+            <div style="display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0;">
+                <label style="cursor:pointer;">
+                    <input type="radio" name="rating" value="great" {% if form.rating.value == 'great' %}checked{% endif %} style="display:none;">
+                    <span style="font-size:2.2rem;">😊</span><br>
+                    <span style="color:#a01a2f; font-weight:600;">Great!</span>
+                </label>
+                <label style="cursor:pointer;">
+                    <input type="radio" name="rating" value="indifferent" {% if form.rating.value == 'indifferent' %}checked{% endif %} style="display:none;">
+                    <span style="font-size:2.2rem;">😐</span><br>
+                    <span style="color:#a01a2f; font-weight:600;">Indifferent</span>
+                </label>
+                <label style="cursor:pointer;">
+                    <input type="radio" name="rating" value="unhappy" {% if form.rating.value == 'unhappy' %}checked{% endif %} style="display:none;">
+                    <span style="font-size:2.2rem;">😞</span><br>
+                    <span style="color:#a01a2f; font-weight:600;">Unhappy</span>
+                </label>
+            </div>
+            {% if form.rating.errors %}
+                <div style="color: #a01a2f; font-size: 0.95rem;">{{ form.rating.errors.0 }}</div>
+            {% endif %}
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <textarea name="comment" rows="3" placeholder="Tell us what is on your mind..." style="width:100%; border-radius:8px; border:1px solid #ccc; padding:0.7rem; font-size:1rem;">{% if form.comment.value %}{{ form.comment.value }}{% endif %}</textarea>
+            {% if form.comment.errors %}
+                <div style="color: #a01a2f; font-size: 0.95rem;">{{ form.comment.errors.0 }}</div>
+            {% endif %}
+        </div>
+        <button type="submit" style="background:#a01a2f; color:#fff; border:none; border-radius:8px; padding:0.7rem 2.2rem; font-size:1.1rem; font-weight:600; cursor:pointer;">Submit feedback</button>
+    </form>
+    {% if messages %}
+        <div style="margin-top:1.5rem; color: #388e3c; font-weight: 500;">{% for message in messages %}{{ message }}{% endfor %}</div>
+    {% endif %}
+</div>
+{% endblock %} 

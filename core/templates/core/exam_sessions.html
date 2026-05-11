@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h2 class="glec-header">Manage Exam Sessions</h2>
+
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Add Exam Session</button>
+</form>
+
+<hr>
+
+<h4>Existing Sessions</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for exam in sessions %}
+        <tr>
+            <td>{{ exam.name }}</td>
+            <td>{{ exam.start_date }}</td>
+            <td>{{ exam.end_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
